@@ -53,6 +53,7 @@ class TrainConfig:
     shaping: bool = True
     shaping_start: float = 1.0
     shaping_end_frac: float = 0.5
+    draw_penalty: float = 0.0
 
     ckpt_every: int = 25
     eval_every: int = 25
@@ -155,7 +156,7 @@ class SelfPlayTrainer:
                 actions[rows, 1 - side] = oa
                 obs_all, sparse, shaped, done, info = self.core.step(actions)
 
-                reward = sparse[rows, side] + coef * shaped[rows, side]
+                reward = sparse[rows, side] + coef * shaped[rows, side] - cfg.draw_penalty * info["truncated"]
                 self.buf.add(t, lo, la, logp.numpy(), v.numpy(), reward, done)
 
                 ep_len += 1

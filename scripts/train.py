@@ -28,6 +28,7 @@ def main():
     ap.add_argument("--opponents", choices=["pool", "latest"], default="pool")
     ap.add_argument("--sparse", action="store_true", help="disable reward shaping")
     ap.add_argument("--shaping-end-frac", type=float, default=0.5)
+    ap.add_argument("--draw-penalty", type=float, default=0.0, help="reward subtracted from both sides on a timeout")
     ap.add_argument("--lr", type=float, default=3e-4)
     ap.add_argument("--ent-coef", type=float, default=0.01)
     ap.add_argument("--eval-every", type=int, default=25)
@@ -45,6 +46,7 @@ def main():
         opponent_mode=args.opponents,
         shaping=not args.sparse,
         shaping_end_frac=args.shaping_end_frac,
+        draw_penalty=args.draw_penalty,
         eval_every=args.eval_every,
         ckpt_every=args.ckpt_every,
         torch_threads=args.threads,

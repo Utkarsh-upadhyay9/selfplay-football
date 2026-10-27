@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+*.egg-info/
+
+# training outputs (large); final checkpoints are copied to models/
+runs/*/checkpoints/
+runs/**/events*

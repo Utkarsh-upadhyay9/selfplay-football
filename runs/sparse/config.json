@@ -1,0 +1,53 @@
+{
+  "train": {
+    "name": "sparse",
+    "total_steps": 30000000,
+    "n_envs": 64,
+    "n_steps": 128,
+    "seed": 0,
+    "hidden": 128,
+    "opponent_mode": "pool",
+    "pool_latest_prob": 0.5,
+    "snapshot_every": 10,
+    "n_groups": 8,
+    "shaping": false,
+    "shaping_start": 1.0,
+    "shaping_end_frac": 0.5,
+    "draw_penalty": 0.0,
+    "ckpt_every": 25,
+    "eval_every": 25,
+    "eval_games": 200,
+    "out_dir": "runs",
+    "torch_threads": 2,
+    "ppo": {
+      "lr": 0.0003,
+      "gamma": 0.995,
+      "gae_lambda": 0.95,
+      "clip": 0.2,
+      "epochs": 4,
+      "minibatches": 4,
+      "ent_coef": 0.003,
+      "vf_coef": 0.5,
+      "max_grad_norm": 0.5,
+      "norm_adv": true
+    }
+  },
+  "game": {
+    "field_l": 100.0,
+    "field_h": 64.0,
+    "goal_w": 20.0,
+    "player_r": 2.0,
+    "player_accel": 0.35,
+    "player_damping": 0.85,
+    "player_max_speed": 2.0,
+    "ball_r": 1.2,
+    "ball_friction": 0.97,
+    "ball_wall_restitution": 0.8,
+    "ball_player_restitution": 0.3,
+    "kick_speed": 4.5,
+    "kick_reach": 1.5,
+    "kick_cooldown": 8,
+    "max_steps": 400,
+    "kickoff_noise": 2.0
+  }
+}

@@ -21,7 +21,7 @@ from football.selfplay import SelfPlayTrainer, TrainConfig  # noqa: E402
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--name", default="main")
-    ap.add_argument("--total-steps", type=float, default=20e6)
+    ap.add_argument("--total-steps", type=float, default=30e6)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--n-envs", type=int, default=64)
     ap.add_argument("--n-steps", type=int, default=128)
@@ -30,7 +30,7 @@ def main():
     ap.add_argument("--shaping-end-frac", type=float, default=0.5)
     ap.add_argument("--draw-penalty", type=float, default=0.0, help="reward subtracted from both sides on a timeout")
     ap.add_argument("--lr", type=float, default=3e-4)
-    ap.add_argument("--ent-coef", type=float, default=0.01)
+    ap.add_argument("--ent-coef", type=float, default=0.003)
     ap.add_argument("--eval-every", type=int, default=25)
     ap.add_argument("--ckpt-every", type=int, default=25)
     ap.add_argument("--threads", type=int, default=4)

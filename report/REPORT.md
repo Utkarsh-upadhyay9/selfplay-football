@@ -97,7 +97,7 @@ did not reduce draws and was not used further.
 | `sparse` | sparse only | pool | 0 |
 | `latest` | shaped → sparse | latest only | 0 |
 
-The **final agent** used for the demo and the human test is `main_seed1`
+The **final agent** used for the demo is `main_seed1`
 (`models/final.pt`).
 
 ## 5. Results
@@ -203,16 +203,6 @@ and scores of 0.45–0.55 mean they are about even.
 | Final agent vs itself | ![](../media/pro_vs_pro.gif) |
 | Rookie (0.8M steps, red) vs final agent | ![](../media/rookie_vs_pro.gif) |
 | Collapsed latest-only agent (red) vs final agent | ![](../media/naive_vs_pro.gif) |
-
-### 5.6 Human test
-
-Protocol: 20 matches of first-to-3 against the final agent at the default
-speed (30 steps/s), using `python scripts/play.py --agent models/final.pt --goals 3`
-or the web demo. Results are logged to `results/human_games.csv`.
-
-| matches | my wins | agent wins | my win rate |
-|---|---|---|---|
-| _to be filled in_ | | | |
 
 ## 6. Limitations and next steps
 

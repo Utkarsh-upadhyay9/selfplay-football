@@ -259,10 +259,11 @@ el("btn-pause").addEventListener("click", togglePause);
 async function init() {
   const manifest = await (await fetch("models/manifest.json")).json();
   const selects = [el("opponent"), el("left-player")];
-  for (const m of manifest.models) {
-    state.opponents[m.id] = await Policy.load(`models/${m.id}.json`);
+  const policies = await Promise.all(manifest.models.map((m) => Policy.load(`models/${m.id}.json`)));
+  manifest.models.forEach((m, i) => {
+    state.opponents[m.id] = policies[i];
     for (const s of selects) s.add(new Option(m.label, m.id));
-  }
+  });
   for (const s of selects) {
     s.add(new Option("Scripted chase bot", "chase"));
     s.add(new Option("Random player", "random"));

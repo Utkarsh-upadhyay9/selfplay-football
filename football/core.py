@@ -168,16 +168,21 @@ class FootballCore:
         c = self.cfg
         min_d = c.player_r + c.ball_r
         e = c.ball_player_restitution
-        for i in (0, 1):
-            rel = self.ball - self.pos[:, i]
+        rows = np.arange(self.n)
+        # Alternate which player is resolved first so neither side is favored.
+        first = self.t % 2
+        for who in (first, 1 - first):
+            p = self.pos[rows, who]
+            v = self.vel[rows, who]
+            rel = self.ball - p
             dist = _norm(rel)
             hit = dist < min_d
             if not hit.any():
                 continue
             n = rel / np.maximum(dist, 1e-8)[:, None]
             n[dist < 1e-8] = (1.0, 0.0)
-            self.ball[hit] = self.pos[hit, i] + n[hit] * min_d
-            vn = ((self.ball_vel - self.vel[:, i]) * n).sum(axis=1)
+            self.ball[hit] = p[hit] + n[hit] * min_d
+            vn = ((self.ball_vel - v) * n).sum(axis=1)
             bounce = hit & (vn < 0)
             self.ball_vel[bounce] -= ((1.0 + e) * vn[bounce])[:, None] * n[bounce]
 

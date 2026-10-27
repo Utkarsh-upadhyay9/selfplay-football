@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Self-Play Football | Play against a PPO agent</title>
+  <meta name="description" content="Play 1v1 football in the browser against an agent trained with self-play PPO." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header>
+    <h1>Self-Play Football</h1>
+    <p class="sub">1v1 against an agent trained from scratch with PPO and self-play. CSE 4633 Artificial Intelligence midterm project by Utkarsh Upadhyay.</p>
+  </header>
+
+  <main>
+    <section class="game">
+      <div class="scoreboard">
+        <span class="team red"><span id="name-left">You</span> <b id="score-left">0</b></span>
+        <span class="dash">–</span>
+        <span class="team blue"><b id="score-right">0</b> <span id="name-right">Agent</span></span>
+      </div>
+      <canvas id="pitch" tabindex="0" aria-label="Football pitch"></canvas>
+      <p id="status" class="status">Loading models…</p>
+
+      <div class="touch" aria-hidden="true">
+        <div class="pad">
+          <button data-dir="-1,1">↖</button><button data-dir="0,1">↑</button><button data-dir="1,1">↗</button>
+          <button data-dir="-1,0">←</button><span></span><button data-dir="1,0">→</button>
+          <button data-dir="-1,-1">↙</button><button data-dir="0,-1">↓</button><button data-dir="1,-1">↘</button>
+        </div>
+        <button id="touch-kick" class="kick">KICK</button>
+      </div>
+
+      <div class="controls">
+        <label>Mode
+          <select id="mode">
+            <option value="play">You vs agent</option>
+            <option value="watch">Watch: player vs agent</option>
+          </select>
+        </label>
+        <label>Opponent (blue)
+          <select id="opponent"></select>
+        </label>
+        <label id="left-player-wrap" hidden>Left player (red)
+          <select id="left-player"></select>
+        </label>
+        <label>First to
+          <select id="first-to">
+            <option>3</option>
+            <option selected>5</option>
+            <option>10</option>
+          </select>
+        </label>
+        <label>Speed <span id="speed-val">30 steps/s</span>
+          <input id="speed" type="range" min="10" max="60" step="5" value="30" />
+        </label>
+        <label class="check"><input id="greedy" type="checkbox" /> Greedy agent (no sampling)</label>
+        <div class="buttons">
+          <button id="btn-start" class="primary">Start</button>
+          <button id="btn-pause">Pause</button>
+        </div>
+      </div>
+      <p id="record" class="record"></p>
+      <p class="hint">Controls: arrow keys or WASD to move, Space to kick, P to pause, R to restart. Lower the speed if the agent is too quick.</p>
+    </section>
+
+    <section class="about">
+      <h2>How it works</h2>
+      <p>The game is a small top-down physics simulation: two round players, a ball with friction, walls that bounce, and goals on each end. Each player picks one of 18 discrete actions (8 move directions or stay, each with or without a kick). Instead of pixels, the agent sees a 16-number vector: positions and velocities of both players and the ball, from its own point of view (the field is mirrored so it always attacks to the right).</p>
+      <p>The agent is a small two-layer MLP trained with <a href="https://arxiv.org/abs/1707.06347">PPO</a> on 64 games in parallel on a laptop CPU. It only ever plays against copies of itself. To keep it from forgetting old tricks, half of the games each rollout are against snapshots sampled from a pool of its own past versions. Early on, a small shaping reward for moving toward the ball and pushing the ball toward the opponent goal helps it get started; that bonus fades to zero halfway through training, leaving only the +1/−1 goal reward.</p>
+      <p>The physics you are playing in here is a line-by-line JavaScript port of the Python training environment (checked step-for-step by a test), and the network runs directly in your browser.</p>
+      <div id="results"></div>
+      <p class="links"><a href="https://github.com/Utkarsh-upadhyay9/selfplay-football">Code on GitHub</a> · <a href="https://github.com/Utkarsh-upadhyay9/selfplay-football/blob/main/report/REPORT.md">Report</a></p>
+    </section>
+  </main>
+
+  <footer>Utkarsh Upadhyay · CSE 4633 Artificial Intelligence · Fall 2026</footer>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

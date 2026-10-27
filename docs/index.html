@@ -70,7 +70,35 @@
       <p>The game is a small top-down physics simulation: two round players, a ball with friction, walls that bounce, and goals on each end. Each player picks one of 18 discrete actions (8 move directions or stay, each with or without a kick). Instead of pixels, the agent sees a 16-number vector: positions and velocities of both players and the ball, from its own point of view (the field is mirrored so it always attacks to the right).</p>
       <p>The agent is a small two-layer MLP trained with <a href="https://arxiv.org/abs/1707.06347">PPO</a> on 64 games in parallel on a laptop CPU. It only ever plays against copies of itself. To keep it from forgetting old tricks, half of the games each rollout are against snapshots sampled from a pool of its own past versions. Early on, a small shaping reward for moving toward the ball and pushing the ball toward the opponent goal helps it get started; that bonus fades to zero halfway through training, leaving only the +1/−1 goal reward.</p>
       <p>The physics you are playing in here is a line-by-line JavaScript port of the Python training environment (checked step-for-step by a test), and the network runs directly in your browser.</p>
-      <div id="results"></div>
+      <h2>Results</h2>
+      <p>Four 30M-step runs, each about 16 minutes on an M5 MacBook Air: the main setup with two seeds, a sparse-reward-only ablation, and a "latest copy only" ablation without the opponent pool.</p>
+      <div class="figures">
+        <figure>
+          <img src="figures/elo_compare.png" alt="Elo of checkpoints over training for the four runs" loading="lazy" />
+          <figcaption>Elo of checkpoints over training, fitted from round-robin cross-play (random bot = 0). With the opponent pool, agents keep improving. Latest-only self-play peaks early and then collapses into a 0–0 equilibrium.</figcaption>
+        </figure>
+        <figure>
+          <img src="figures/crossplay_heatmap.png" alt="Cross-play heatmap of checkpoints" loading="lazy" />
+          <figcaption>Cross-play score (win = 1, draw = 0.5) between checkpoints of the final agent's run. Blue below the diagonal means later checkpoints beat earlier ones.</figcaption>
+        </figure>
+        <figure>
+          <img src="figures/learning_curves.png" alt="Learning curves" loading="lazy" />
+          <figcaption>Win rate against the scripted bots, self-play draw rate, and policy entropy over training.</figcaption>
+        </figure>
+        <figure>
+          <img src="figures/pro_vs_chase.gif" alt="Final agent playing the chase bot" loading="lazy" />
+          <figcaption>Final agent (red) vs. the scripted "chase the ball and shoot" bot.</figcaption>
+        </figure>
+      </div>
+      <table>
+        <thead><tr><th>Final agent (1000 games each)</th><th>vs random W / D / L</th><th>vs chase bot W / D / L</th></tr></thead>
+        <tbody>
+          <tr><td>Pool self-play, seed 1 (Pro)</td><td>70 / 28 / 2 %</td><td>80 / 7 / 14 %</td></tr>
+          <tr><td>Pool self-play, seed 0</td><td>47 / 51 / 2 %</td><td>71 / 6 / 23 %</td></tr>
+          <tr><td>Sparse reward only</td><td>46 / 53 / 1 %</td><td>86 / 3 / 12 %</td></tr>
+          <tr><td>Latest-only self-play</td><td>3 / 95 / 2 %</td><td>14 / 7 / 79 %</td></tr>
+        </tbody>
+      </table>
       <p class="links"><a href="https://github.com/Utkarsh-upadhyay9/selfplay-football">Code on GitHub</a> · <a href="https://github.com/Utkarsh-upadhyay9/selfplay-football/blob/main/report/REPORT.md">Report</a></p>
     </section>
   </main>

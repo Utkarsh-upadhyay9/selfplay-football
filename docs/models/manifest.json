@@ -1,0 +1,10 @@
+{
+  "default": "pro",
+  "models": [
+    {"id": "pro", "label": "Pro (30M steps)"},
+    {"id": "amateur", "label": "Amateur (4.9M steps)"},
+    {"id": "rookie", "label": "Rookie (0.8M steps)"},
+    {"id": "sparse", "label": "Sparse-reward agent (30M)"},
+    {"id": "naive", "label": "Naive self-play, collapsed (30M)"}
+  ]
+}

@@ -1,0 +1,13 @@
+        main  vs random W/D/L 468/512/20   vs chase W/D/L 711/63/226
+  main_seed1  vs random W/D/L 703/277/20   vs chase W/D/L 796/67/137
+      sparse  vs random W/D/L 462/528/10   vs chase W/D/L 859/26/115
+      latest  vs random W/D/L 27/951/22   vs chase W/D/L 140/74/786
+
+head-to-head score (row vs column):
+                      main  main_seed1      sparse      latest
+        main          0.50        0.48        0.51        0.50
+  main_seed1          0.52        0.50        0.55        0.91
+      sparse          0.49        0.45        0.50        0.50
+      latest          0.50        0.09        0.50        0.50
+
+wrote results/ablations/ablations.json and baselines.png

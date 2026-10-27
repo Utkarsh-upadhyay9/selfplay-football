@@ -63,7 +63,7 @@ def main():
         steps = update * args.n_envs * args.n_steps
         rows.append({"env_steps": steps, "mean_return": recent, **stats})
         if update % 10 == 0 or update == n_updates:
-            print(f"steps {steps:>7d}  return {recent:6.1f}  kl {stats["approx_kl"]:.2e}  {time.time() - t0:.0f}s")
+            print(f"steps {steps:>7d}  return {recent:6.1f}  kl {stats['approx_kl']:.2e}  {time.time() - t0:.0f}s")
 
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)

@@ -1,0 +1,13 @@
+[project]
+name = "selfplay-football"
+version = "0.1.0"
+description = "Self-play deep RL for a 2D 1v1 football game"
+authors = [{ name = "Utkarsh Upadhyay" }]
+requires-python = ">=3.10"
+
+[tool.setuptools]
+packages = ["football"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
